@@ -4,7 +4,10 @@
 	"description": "Unofficial forum for the Stronghold (SHx) community - Database",
 	"private": true,
 	"type": "module",
-	"scripts": {},
+	"scripts": {
+		"migrate": "node --env-file=../../.env src/migrate.ts",
+		"codegen": "kysely-codegen --dialect postgres --env-file ../../.env --url \"env(DIRECT_DATABASE_URL)\" --out-file src/schema.ts"
+	},
 	"author": "Padparadscho <contact@padparadscho.com>",
 	"repository": {
 		"type": "git",
@@ -13,6 +16,16 @@
 	"bugs": "https://github.com/padparadscho/voxlens/issues",
 	"homepage": "https://github.com/padparadscho/voxlens#readme",
 	"license": "AGPL-3.0-only",
-	"dependencies": {},
-	"devDependencies": {}
+	"dependencies": {
+		"@vercel/functions": "3.7.5",
+		"kysely": "0.29.3",
+		"pg": "8.22.0",
+		"zod": "4.4.3"
+	},
+	"devDependencies": {
+		"@types/node": "26.1.1",
+		"@types/pg": "8.20.0",
+		"kysely-codegen": "0.20.0",
+		"typescript": "7.0.2"
+	}
 }
