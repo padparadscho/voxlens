@@ -4,6 +4,7 @@
 	"description": "Unofficial forum for the Stronghold (SHx) community - Auth",
 	"private": true,
 	"type": "module",
+	"main": "src/index.ts",
 	"scripts": {},
 	"author": "Padparadscho <contact@padparadscho.com>",
 	"repository": {
@@ -13,6 +14,14 @@
 	"bugs": "https://github.com/padparadscho/voxlens/issues",
 	"homepage": "https://github.com/padparadscho/voxlens#readme",
 	"license": "AGPL-3.0-only",
-	"dependencies": {},
-	"devDependencies": {}
+	"dependencies": {
+		"@voxlens/database": "workspace:*",
+		"@stellar/stellar-sdk": "16.0.1",
+		"jose": "6.2.3",
+		"zod": "4.4.3"
+	},
+	"devDependencies": {
+		"@types/node": "26.1.1",
+		"typescript": "7.0.2"
+	}
 }
