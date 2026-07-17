@@ -1,7 +1,12 @@
 // SPDX-FileCopyrightText: 2026 Padparadscho <contact@padparadscho.com>
 // SPDX-License-Identifier: AGPL-3.0-only
 
-import { Keypair, Networks, WebAuth } from "@stellar/stellar-sdk";
+import {
+	Keypair,
+	Networks,
+	TransactionBuilder,
+	WebAuth,
+} from "@stellar/stellar-sdk";
 import { db } from "@voxlens/database";
 import { z } from "zod";
 import { env } from "./config.ts";
@@ -27,6 +32,16 @@ export async function verifyChallenge(input: string, transactionXdr: string) {
 		.selectFrom("auth_challenges")
 		.selectAll()
 		.where("user_address", "=", address)
+		.where(
+			"challenge_nonce",
+			"=",
+			TransactionBuilder.fromXDR(
+				signedTransactionXdr,
+				env.STELLAR_NETWORK === "PUBLIC" ? Networks.PUBLIC : Networks.TESTNET,
+			)
+				.hash()
+				.toString("hex"),
+		)
 		.where("is_used", "=", false)
 		.where("challenge_expires_at", ">", new Date())
 		.executeTakeFirst();

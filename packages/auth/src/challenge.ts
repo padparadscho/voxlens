@@ -1,7 +1,12 @@
 // SPDX-FileCopyrightText: 2026 Padparadscho <contact@padparadscho.com>
 // SPDX-License-Identifier: AGPL-3.0-only
 
-import { Keypair, Networks, WebAuth } from "@stellar/stellar-sdk";
+import {
+	Keypair,
+	Networks,
+	TransactionBuilder,
+	WebAuth,
+} from "@stellar/stellar-sdk";
 import { db } from "@voxlens/database";
 import { z } from "zod";
 import { env } from "./config.ts";
@@ -37,7 +42,12 @@ export async function createChallenge(input: string) {
 		.insertInto("auth_challenges")
 		.values({
 			user_address: address,
-			challenge_nonce: transactionXdr,
+			challenge_nonce: TransactionBuilder.fromXDR(
+				transactionXdr,
+				env.STELLAR_NETWORK === "PUBLIC" ? Networks.PUBLIC : Networks.TESTNET,
+			)
+				.hash()
+				.toString("hex"),
 			challenge_expires_at: new Date(
 				Date.now() + CHALLENGE_TIMEOUT_SECONDS * 1000,
 			),
