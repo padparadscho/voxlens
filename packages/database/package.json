@@ -4,6 +4,7 @@
 	"description": "Unofficial forum for the Stronghold (SHx) community - Database",
 	"private": true,
 	"type": "module",
+	"main": "src/index.ts",
 	"scripts": {
 		"migrate": "node --env-file=../../.env src/migrate.ts",
 		"codegen": "kysely-codegen --dialect postgres --env-file ../../.env --url \"env(DIRECT_DATABASE_URL)\" --out-file src/schema.ts"
