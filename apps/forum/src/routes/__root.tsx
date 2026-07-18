@@ -2,13 +2,26 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 
 import { TanStackDevtools } from "@tanstack/react-devtools";
-import { createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
+import {
+	createRootRoute,
+	HeadContent,
+	redirect,
+	Scripts,
+} from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { ThemeProvider } from "next-themes";
+import { getCurrentUser } from "@/lib/session.ts";
 
 import appCss from "../styles.css?url";
 
 export const Route = createRootRoute({
+	beforeLoad: async ({ location }) => {
+		const user = await getCurrentUser();
+
+		if (!user && location.pathname !== "/login") {
+			throw redirect({ to: "/login" });
+		}
+	},
 	head: () => ({
 		meta: [
 			{
