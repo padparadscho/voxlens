@@ -8,6 +8,8 @@
 		"migrate": "pnpm --filter database migrate",
 		"codegen": "pnpm --filter database codegen",
 		"auth:test": "pnpm --filter auth test",
+		"dev": "pnpm --filter forum dev",
+		"build": "pnpm --filter forum build",
 		"check": "biome check --write",
 		"format": "biome format --write",
 		"lint": "biome lint --write"
