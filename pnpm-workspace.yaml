@@ -2,5 +2,9 @@ packages:
   - "apps/*"
   - "packages/*"
 
+onlyBuiltDependencies:
+  - esbuild
+  - lightningcss
+
 minimumReleaseAgeExclude:
   - '@biomejs/*'
